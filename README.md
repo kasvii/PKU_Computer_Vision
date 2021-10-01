@@ -5,11 +5,11 @@
 
 ## 课程作业
 
-- [x] :**第二节课作业**(2021.09.28)
-    - [x] :[OpenCV图像人脸检测]()
+- [x] **第二节课作业**(2021.09.28)
+    - [x] [OpenCV图像人脸检测]()
 
-- [x] :**第一节课作业**(2021.09.21)
-    - [x] :[论文清单](./Class_1/Paper_list.md)  
+- [x] **第一节课作业**(2021.09.21)
+    - [x] [论文清单](./Class_1/Paper_list.md)  
 
 
 
@@ -17,5 +17,4 @@
 
 - 邮箱：[youyx@stu.pku.edu.cn](mailto:youyx@stu.pku.edu.cn)
 - 指导老师：[张健助理教授](https://jianzhang.tech/)
-
 
