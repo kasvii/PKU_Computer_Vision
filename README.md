@@ -5,6 +5,17 @@
 
 ## 课程作业
 
+-  **第三次课作业**(2021.10.05)
+    - [安装PyTorch](./Class_3/PyTorch_installation.md)
+    - 运行所有ipynb文件
+        - [W2_Numpy.ipynb](./Class_3/W2_Numpy.ipynb)
+	- [W2_OpenCV.ipynb](./Class_3/W2_OpenCV.ipynb)
+	- [W2_Python-Class.ipynb](./Class_3/W2_Python-Class.ipynb)
+	- [W3_PyTorch_Basic.ipynb](./Class_3/W3_PyTorch_Basic.ipynb)
+	- [W3_Regression_Python.ipynb](./Class_3/W3_Regression_Python.ipynb)
+	- [W3_Tensor_Tutorial.ipynb](./Clkass_3/W3_Tensor_Tutorial.ipynb)
+    - [视频人脸检测](./Class_3/Video_Face_Detection.md)
+
 -  **第二节课作业**(2021.09.28)
     - [OpenCV图像人脸检测]()
 
