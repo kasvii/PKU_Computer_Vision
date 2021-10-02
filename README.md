@@ -17,7 +17,7 @@
 	- [视频人脸检测](./Class_3/Video_Face_Detection.md)
     
 -  **第二节课作业**(2021.09.28)
-    - [OpenCV图像人脸检测]()
+    - [OpenCV图像人脸检测](./Class_2/homework2.pdf)
 
 -  **第一节课作业**(2021.09.21)
    
