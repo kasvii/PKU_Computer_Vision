@@ -5,6 +5,8 @@
 
 ## 课程作业
 
+-  **第四次作业**(2021.10.15)
+    - [矩阵求导及验证](./Class_4)
 -  **第三次课作业**(2021.10.05)
     - [安装PyTorch](./Class_3/PyTorch_installation.md)
     - 运行所有ipynb文件
@@ -15,10 +17,8 @@
 	    - [W3_Regression_Python.ipynb](./Class_3/ipynb/W3_Regression_Python.ipynb)
 	    - [W3_Tensor_Tutorial.ipynb](./Class_3/ipynb/W3_Tensor_Tutorial.ipynb)
 	- [视频人脸检测](./Class_3/Video_Face_Detection.md)
-    
 -  **第二节课作业**(2021.09.28)
     - [OpenCV图像人脸检测](./Class_2/homework2.pdf)
-
 -  **第一节课作业**(2021.09.21)
    
     -  [论文清单](./Class_1/Paper_list.md)  
