@@ -1,5 +1,7 @@
 # 矩阵求导
 
+> 计算机视觉第四次作业  |  2101212840   游盈萱
+
 [TOC]
 
 ## 问题描述
@@ -81,6 +83,34 @@ $$
 =>\ \frac {\partial f}{\partial Y} = 2(Y-XW)
 $$
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 程序验证
 
 ```python
@@ -121,6 +151,24 @@ $$\begin{aligned}
          &[ 0.1239,  1.1648,  0.9234,  1.3873]], requires_grad=True))\\
 \end{aligned}$$
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```python
 M0 = torch.zeros(10, 4)
 W.grad.zero_()
@@ -158,6 +206,8 @@ $$\begin{aligned}
          &[  1.7406,   4.0666,  -0.1749,  -4.2519]]))\\
 \end{aligned}$$
 
+
+
 ### 1. 验证$$\frac {\partial f}{\partial W}$$
 
 ```
@@ -172,6 +222,16 @@ tensor([&[True, True, True, True],\\
 \end{aligned}$$
 
 说明$$\frac {\partial f}{\partial W} = 2X^T(XW-Y)$$推导正确
+
+
+
+
+
+
+
+
+
+
 
 ### 2. 验证$$\frac {\partial f}{\partial X}$$
 ```

@@ -6,7 +6,7 @@
 ## 课程作业
 
 -  **第四次作业**(2021.10.15)
-    - [矩阵求导及验证](./Class_4)
+    - [矩阵求导及验证](./Class_4/Computer_Vision_HW4.pdf)
 -  **第三次课作业**(2021.10.05)
     - [安装PyTorch](./Class_3/PyTorch_installation.md)
     - 运行所有ipynb文件
