@@ -22,6 +22,7 @@ f &=||XW-Y||^2_F \\ \\
   &=tr[(XW - Y)^T(XW - Y)]
 \end{aligned}
 $$
+对方程两边求微分，
 $$
 \begin{aligned}
 df&=d\{tr[(XW - Y)^T(XW - Y)]\} \\ \\
