@@ -16,101 +16,85 @@ $$
 
 ## 推导过程
 
+令$Z=XW$，$h=max(Z,0)$，
+
+于是，
 $$
 \begin{aligned}
-f &=||XW-Y||^2_F \\ \\
-  &=tr[(XW - Y)^T(XW - Y)]
+f &=||max(XW,0)-Y||^2_F \\ \\
+  &=||h-Y||^2_F \\ \\
+  &=tr[(h - Y)^T(h - Y)] 
 \end{aligned}
 $$
-对方程两边求微分，
+方程两边取微分得到，
 $$
 \begin{aligned}
-df&=d\{tr[(XW - Y)^T(XW - Y)]\} \\ \\
-  &=tr\{d[(XW - Y)^T(XW - Y)]\}
+df&=d\{tr[(h - Y)^T(h - Y)]\} \\ \\
+  &=tr\{d[(h - Y)^T(h - Y)]\} \\ \\
+  &=tr[(dh)^T(h-Y)+(h-Y)^Tdh]\} \\ \\
+  &=tr[2(h-Y)^Tdh]
 \end{aligned}
+$$
+
+得到$$\frac {\partial f} {\partial h}$$，
+$$
+=>\ \frac {\partial f}{\partial h} = 2(h-Y)
+$$
+推导$$\frac {\partial f} {\partial Z}$$，
+$$
+\begin{aligned}
+\frac {\partial f}{\partial Z}&=\frac {\partial f}{\partial h}\cdot \frac {\partial h}{\partial Z} \\ \\
+ &=2(h-Y)\odot max'(Z)
+\end{aligned}
+$$
+得到$$\frac {\partial f} {\partial Z}$$，
+$$
+=>\ \frac {\partial f}{\partial Z}=2(h-Y)\odot max'(Z)
 $$
 
 ### 1. 推导$$\frac {\partial f} {\partial W}$$，$f$对$W$求偏导
-
-$$
-df=tr\{d[(XW - Y)^T(XW - Y)]\}
-$$
-$f$对$W$求偏导，
+由$$\frac {\partial f}{\partial Z}=2(h-Y)\odot max'(Z)$$，推导
 $$
 \begin{aligned}
-df &= tr[(XdW)^T(XW-Y)+(XW-Y)^T(XdW)] \\ \\
-   &= tr[2(XW-Y)^TXdW] 
+df&=tr[2((h-Y)\odot max'(Z))^TdZ]\\ \\
+  &=tr[2((h-Y)\odot max'(Z))^Td(XW)]\\ \\
+  &=tr[2((h-Y)\odot max'(Z))^TXdW]\\ \\
 \end{aligned}
 $$
+
 得到$$\frac {\partial f} {\partial W}$$，
 $$
-=>\ \frac {\partial f}{\partial W} = 2X^T(XW-Y)
+=>\ \frac {\partial f}{\partial W} = 2X^T[(h-Y)\odot max'(Z)]
 $$
-
 ### 2. 推导$$\frac {\partial f} {\partial X}$$，$f$对$X$求偏导
-
-$$
-df=tr\{d[(XW - Y)^T(XW - Y)]\}
-$$
-
-$f$对$X$求偏导，
+由$$\frac {\partial f}{\partial Z}=2(h-Y)\odot max'(Z)$$，推导
 $$
 \begin{aligned}
-df &= tr[d(XW)^T(XW-Y)+(XW-Y)^Td(XW)] \\ \\
-   &= tr[2(XW-Y)^Td(XW)] \\ \\
-   &= tr[2W(XW-Y)^TdW]
+df&=tr[2((h-Y)\odot max'(Z))^TdZ]\\ \\
+  &=tr[2((h-Y)\odot max'(Z))^Td(XW)]\\ \\
+  &=tr[2((h-Y)\odot max'(Z))^T(dX)W]\\ \\
+  &=tr[2W((h-Y)\odot max'(Z))^T(dX)]
 \end{aligned}
 $$
 
 得到$$\frac {\partial f} {\partial X}$$，
 $$
-=>\ \frac {\partial f}{\partial X} = 2(XW-Y)W^T
+=>\ \frac {\partial f}{\partial X} = 2[(h-Y)\odot max'(Z)]W^T
 $$
-
 ### 3. 推导$$\frac {\partial f} {\partial Y}$$，$f$对$Y$求偏导
 
 $$
-df=tr\{d[(XW - Y)^T(XW - Y)]\}
-$$
-$f$对$Y$求偏导，
-$$
 \begin{aligned}
-df &= tr[-d(Y)^T(XW-Y)-(XW-Y)^TdY] \\ \\
-   &= tr[2(Y-XW)^TdY] \\ \\
+df&=tr\{d[(h - Y)^T(h - Y)]\} \\ \\
+  &=tr[-(dY)^T(h-Y)-(h-Y)^TdY]\} \\ \\
+  &=tr[2(Y-h)^TdY]
 \end{aligned}
 $$
+
 得到$$\frac {\partial f} {\partial Y}$$，
 $$
-=>\ \frac {\partial f}{\partial Y} = 2(Y-XW)
+=>\ \frac {\partial f}{\partial Y} = 2(Y-h)
 $$
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 程序验证
 
@@ -125,7 +109,7 @@ Y = torch.randn(10, 4, requires_grad = True)
 X, W, Y
 ```
 
-$$\begin{aligned}
+$$\begin{aligned} 
 (tensor([&[-1.1258, -1.1524, -0.2506, -0.4339],\\
          &[ 0.8487,  0.6920, -0.3160, -2.1152],\\
          &[ 0.3223, -1.2633,  0.3500,  0.3081],\\
@@ -149,70 +133,105 @@ $$\begin{aligned}
          &[-0.2188, -2.4351, -0.0729, -0.0340],\\
          &[ 0.9625,  0.3492, -0.9215, -0.0562],\\
          &[-0.6227, -0.4637,  1.9218, -0.4025],\\
-         &[ 0.1239,  1.1648,  0.9234,  1.3873]], requires_grad=True))\\
-\end{aligned}$$
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+         &[ 0.1239,  1.1648,  0.9234,  1.3873]], requires_grad=True))\\ 
+         \end{aligned}$$
 
 ```python
-M0 = torch.zeros(10, 4)
-W.grad.zero_()
-X.grad.zero_()
-Y.grad.zero_()
-f = torch.norm(torch.mm(X, W) - Y) ** 2
+Z = torch.mm(X, W)
+Z
+```
+
+$$\begin{aligned}
+tensor([&[ 0.0649, -1.2330, -0.1154,  0.8553],\\
+        &[ 4.1687,  1.0353, -1.0558, -3.5272],\\
+        &[-1.6094, -2.0869, -0.7125,  0.8028],\\
+        &[-0.3500,  2.1129,  0.3719, -1.6785],\\
+        &[-3.2240, -2.0529,  0.2291,  2.5247],\\
+        &[-3.1207, -3.0911, -0.2830,  3.2112],\\
+        &[-1.6198, -0.9920, -0.1762,  0.6243],\\
+        &[-2.4140, -0.8861, -0.0917,  0.6813],\\
+        &[ 1.8953, -0.6369, -0.5659, -0.1305],\\
+        &[-0.7464, -0.8685,  1.0108,  3.5132]], grad_fn=<MmBackward>)
+\end{aligned}$$
+
+```
+H = torch.clamp(Z, 0)
+H
+```
+
+$$\begin{aligned}
+tensor([&[0.0649, 0.0000, 0.0000, 0.8553],\\        &[4.1687, 1.0353, 0.0000, 0.0000], \\       &[0.0000, 0.0000, 0.0000, 0.8028], \\       &[0.0000, 2.1129, 0.3719, 0.0000], \\       &[0.0000, 0.0000, 0.2291, 2.5247],\\        &[0.0000, 0.0000, 0.0000, 3.2112], \\       &[0.0000, 0.0000, 0.0000, 0.6243],  \\      &[0.0000, 0.0000, 0.0000, 0.6813], \\       &[1.8953, 0.0000, 0.0000, 0.0000], \\       &[0.0000, 0.0000, 1.0108, 3.5132]], grad_fn=<ClampBackward>)
+\end{aligned}$$
+
+```
+f = (H - Y).pow(2).sum()
+f
+```
+
+$$tensor(99.9048, grad_fn=<SumBackward0>)$$
+
+```
 f.backward()
 W.grad, X.grad, Y.grad
 ```
 
 $$\begin{aligned}
-(tensor([&[ 22.4769,  10.3214,   0.5826,  -5.9407],\\
-         &[ 50.8333,  35.6112,   3.9501, -30.7748],\\
-         &[-14.4824,  11.2645,   7.2040,  -7.0126],\\
-         &[-53.4309, -28.8103,   0.7109,  42.7320]]),\\
- tensor([&[  6.1743, -11.9859,   4.3394,  -0.0597],\\
-         &[  4.7394,  14.5691, -10.1215, -25.4544],\\
-         &[ -1.4891,  -6.4197,   3.7353,   9.1782],\\
-         &[  1.2874,   8.9058,   1.9930,  -8.3078],\\
-         &[ -1.2455, -11.9822,   5.9854,  15.0334],\\
-         &[ -2.3351, -22.5698,   8.3787,  26.0864],\\
-         &[ -2.4884,   1.9020,   3.6204,   5.2850],\\
-         &[ -2.0456,  -7.8526,   7.6394,  13.2748],\\
-         &[  3.7401,  -0.3867,  -6.6651,  -8.9618],\\
-         &[ -0.9880,  -9.7293,  -0.5763,   9.1050]]),\\
- tensor([&[  2.8885,   6.6300,   3.6443,   3.0501],\\
-         &[-10.5886,  -2.7045,  -0.0733,   6.8840],\\
-         &[  3.8740,   2.6523,  -1.7731,  -1.5687],\\
-         &[ -0.8009,  -3.8551,   0.4984,   4.6333],\\
-         &[  6.4413,   3.0368,   1.8791,  -4.2604],\\
-         &[ 10.1243,   7.7652,   0.5255,  -7.2968],\\
-         &[  2.8020,  -2.8862,   0.2066,  -1.3166],\\
-         &[  6.7530,   2.4705,  -1.6596,  -1.4750],\\
-         &[ -5.0359,   0.3463,   4.9753,  -0.5440],\\
-         &[  1.7406,   4.0666,  -0.1749,  -4.2519]]))\\
+(tensor([&[ 18.2980,   2.7573,   2.3914,  -0.1974],\\
+         &[ 11.0817,   6.6428,   2.5163, -20.3225],\\
+         &[ -8.6662,   3.4506,  -1.8979,  -3.3608],\\
+         &[-21.1681,  -6.6739,  -1.0693,  27.0278]]),\\
+ tensor([&[  1.1002,   0.0860,   5.3377,   0.2788],\\
+         &[  0.9583,  10.4633, -13.5234, -16.3639],\\
+         &[ -0.8712,  -0.9272,  -0.7764,   2.0790],\\
+         &[ -1.4504,   5.6914,   0.7613,  -0.9693],\\
+         &[ -1.2892,  -3.4714,  -1.9788,   4.8091],\\
+         &[ -4.0523,  -4.3127,  -3.6114,   9.6703],\\
+         &[ -0.7312,  -0.7782,  -0.6516,   1.7449],\\
+         &[ -0.8191,  -0.8718,  -0.7300,   1.9547],\\
+         &[  1.0350,   2.9930,  -6.6743,  -7.5333],\\
+         &[ -2.4616,  -2.4243,  -2.1164,   5.7128]]),\\
+ tensor([&[ 2.8885e+00,  4.1639e+00,  3.4134e+00,  3.0501e+00],\\
+         &[-1.0589e+01, -2.7045e+00, -2.1849e+00, -1.7039e-01],\\
+         &[ 6.5523e-01, -1.5214e+00, -3.1982e+00, -1.5687e+00],\\
+         &[-1.5009e+00, -3.8551e+00,  4.9843e-01,  1.2764e+00],\\
+         &[-6.6077e-03, -1.0689e+00,  1.8791e+00, -4.2604e+00],\\
+         &[ 3.8829e+00,  1.5830e+00, -4.0504e-02, -7.2968e+00],\\
+         &[-4.3767e-01, -4.8701e+00, -1.4583e-01, -1.3166e+00],\\
+         &[ 1.9250e+00,  6.9834e-01, -1.8429e+00, -1.4750e+00],\\
+         &[-5.0359e+00, -9.2744e-01,  3.8436e+00, -8.0509e-01],\\
+         &[ 2.4780e-01,  2.3296e+00, -1.7491e-01, -4.2519e+00]]))
 \end{aligned}$$
 
+
+
+
+
+
+
+
+
+```
+H_grad = Z > 0 
+H_grad
+```
+$$\begin{aligned}
+tensor([&[ True, False, False,  True],\\
+        &[ True,  True, False, False],\\
+        &[False, False, False,  True],\\
+        &[False,  True,  True, False],\\
+        &[False, False,  True,  True],\\
+        &[False, False, False,  True],\\
+        &[False, False, False,  True],\\
+        &[False, False, False,  True],\\
+        &[ True, False, False, False],\\
+        &[False, False,  True,  True]])
+\end{aligned}$$
 
 
 ### 1. 验证$$\frac {\partial f}{\partial W}$$
 
 ```
-W.grad == 2 * torch.mm(X.t(), (torch.mm(X, W) - Y))
+W.grad == 2 * torch.mm(X.t(), (H - Y) * H_grad) 
 ```
 
 $$\begin{aligned}
@@ -222,21 +241,11 @@ tensor([&[True, True, True, True],\\
         &[True, True, True, True]])\\
 \end{aligned}$$
 
-说明$$\frac {\partial f}{\partial W} = 2X^T(XW-Y)$$推导正确
-
-
-
-
-
-
-
-
-
-
+说明$$\frac {\partial f}{\partial W} = 2X^T[(h-Y)\odot max'(Z)]$$推导正确
 
 ### 2. 验证$$\frac {\partial f}{\partial X}$$
 ```
-X.grad == 2 * torch.mm((torch.mm(X, W) - Y), W.t())
+X.grad == 2 * torch.mm((H - Y) * H_grad, W.t()) 
 ```
 
 $$\begin{aligned}
@@ -252,11 +261,11 @@ tensor([&[True, True, True, True],\\
         &[True, True, True, True]])\\
         \end{aligned}$$
 
-说明$$\frac {\partial f}{\partial X} = 2(XW-Y)W^T$$推导正确
+说明$$\frac {\partial f}{\partial X} = 2[(h-Y)\odot max'(Z)]W^T$$推导正确
 
 ### 3. 验证$$\frac {\partial f}{\partial Y}$$
 ```
-Y.grad == 2 * (Y - torch.mm(X, W))
+Y.grad == 2 * (Y - H)
 ```
 
 $$\begin{aligned}
@@ -272,4 +281,4 @@ tensor([&[True, True, True, True],\\
         &[True, True, True, True]])\\
         \end{aligned}$$
 
-说明$$\frac {\partial f}{\partial Y} = 2(Y-XW)$$推导正确
+说明$$\frac {\partial f}{\partial Y} = 2(Y-h)$$推导正确
