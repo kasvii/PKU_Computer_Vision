@@ -7,6 +7,7 @@
 
 -  **第五次作业**(2021.10.21)
     - [PyTorch搭建两侧全连接网络](./Class_5/W5_Homework_yyx.ipynb)
+    - [导数表达式](./Class_5/Computer_Vision_HW5.pdf)
 -  **第四次作业**(2021.10.15)
     - [矩阵求导及验证](./Class_4/Computer_Vision_HW4.pdf)
 -  **第三次课作业**(2021.10.05)
