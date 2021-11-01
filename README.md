@@ -5,6 +5,8 @@
 
 ## 课程作业
 
+-  **第六次作业**(2021.11.01)
+    - [训练手写识别器](./Class_6/W6_MNIST_FC_yyx.ipynb)
 -  **第五次作业**(2021.10.21)
     - [PyTorch搭建两侧全连接网络](./Class_5/W5_Homework_yyx.ipynb)
     - [导数表达式](./Class_5/Computer_Vision_HW5.pdf)
